@@ -1,0 +1,16 @@
+services:
+
+    LSB\OfferBundle\Factory\OfferFactory: null
+    lsb_offer_factory_offer:
+        alias: LSB\OfferBundle\Factory\OfferFactory
+    LSB\OfferBundle\Factory\OfferFactoryInterface: '@LSB\OfferBundle\Factory\OfferFactory'
+
+    LSB\OfferBundle\Factory\VariantFactory: null
+    lsb_offer_factory_variant:
+        alias: LSB\OfferBundle\Factory\VariantFactory
+    LSB\OfferBundle\Factory\VariantFactoryInterface: '@LSB\OfferBundle\Factory\VariantFactory'
+
+    LSB\OfferBundle\Factory\LineFactory: null
+    lsb_offer_factory_line:
+        alias: LSB\OfferBundle\Factory\LineFactory
+    LSB\OfferBundle\Factory\LineFactoryInterface: '@LSB\OfferBundle\Factory\LineFactory'

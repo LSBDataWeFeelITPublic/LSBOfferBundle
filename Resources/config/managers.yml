@@ -1,0 +1,13 @@
+services:
+
+    LSB\OfferBundle\Manager\OfferManager:
+        arguments:
+            - '@lsb_utility_object_manager'
+
+    LSB\OfferBundle\Manager\VariantManager:
+        arguments:
+            - '@lsb_utility_object_manager'
+
+    LSB\OfferBundle\Manager\LineManager:
+        arguments:
+            - '@lsb_utility_object_manager'

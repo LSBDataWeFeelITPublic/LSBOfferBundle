@@ -1,0 +1,16 @@
+services:
+
+    LSB\OfferBundle\Repository\OfferRepository:
+        arguments:
+            - '@doctrine'
+    LSB\OfferBundle\Repository\OfferRepositoryInterface: '@LSB\OfferBundle\Repository\OfferRepository'
+
+    LSB\OfferBundle\Repository\VariantRepository:
+        arguments:
+            - '@doctrine'
+    LSB\OfferBundle\Repository\VariantRepositoryInterface: '@LSB\OfferBundle\Repository\VariantRepository'
+
+    LSB\OfferBundle\Repository\LineRepository:
+        arguments:
+            - '@doctrine'
+    LSB\OfferBundle\Repository\LineRepositoryInterface: '@LSB\OfferBundle\Repository\LineRepository'

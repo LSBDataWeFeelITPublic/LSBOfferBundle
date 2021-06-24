@@ -1,0 +1,13 @@
+services:
+
+    LSB\OfferBundle\Form\OfferType:
+        tags:
+            - { name: form.type }
+
+    LSB\OfferBundle\Form\VariantType:
+        tags:
+            - { name: form.type }
+
+    LSB\OfferBundle\Form\LineType:
+        tags:
+            - { name: form.type }
