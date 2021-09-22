@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use LSB\ContractorBundle\Entity\Address;
 use LSB\ContractorBundle\Entity\ContractorInterface;
+use LSB\LocaleBundle\Entity\CurrencyInterface;
 use LSB\UserBundle\Entity\UserInterface;
 use LSB\UtilityBundle\Traits\CreatedUpdatedTrait;
 use Doctrine\ORM\Mapping\MappedSuperclass;
@@ -59,6 +60,12 @@ class Offer implements OfferInterface
      * @ORM\Embedded(class="LSB\ContractorBundle\Entity\Address", columnPrefix="contractor_")
      */
     protected ?Address $contractorAddress;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="LSB\LocaleBundle\Entity\CurrencyInterface")
+     * @ORM\JoinColumn(name="currency_id", referencedColumnName="id", nullable=true)
+     */
+    protected ?CurrencyInterface $currency;
 
     /**
      * @var UserInterface|null
@@ -246,5 +253,24 @@ class Offer implements OfferInterface
         $this->variants = $variants;
         return $this;
     }
+
+    /**
+     * @return CurrencyInterface|null
+     */
+    public function getCurrency(): ?CurrencyInterface
+    {
+        return $this->currency;
+    }
+
+    /**
+     * @param CurrencyInterface|null $currency
+     * @return Offer
+     */
+    public function setCurrency(?CurrencyInterface $currency): Offer
+    {
+        $this->currency = $currency;
+        return $this;
+    }
+
 
 }

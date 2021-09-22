@@ -5,6 +5,7 @@ namespace LSB\OfferBundle\Entity;
 
 use LSB\ContractorBundle\Entity\Address;
 use LSB\ContractorBundle\Entity\ContractorInterface;
+use LSB\LocaleBundle\Entity\CurrencyInterface;
 use LSB\UserBundle\Entity\UserInterface;
 
 // TODO rozszerzać interfejsy UUID, created itd?
@@ -41,5 +42,9 @@ interface OfferInterface
     public function getVariants();
 
     public function setVariants($variants);
+
+    public function getCurrency(): ?CurrencyInterface;
+
+    public function setCurrency(?CurrencyInterface $currency): self;
 
 }

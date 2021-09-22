@@ -7,10 +7,12 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use LSB\ProductBundle\Entity\ProductInterface;
+use LSB\UtilityBundle\Helper\ValueHelper;
 use LSB\UtilityBundle\Traits\CreatedUpdatedTrait;
 use Doctrine\ORM\Mapping\MappedSuperclass;
 use LSB\UtilityBundle\Traits\PositionTrait;
 use LSB\UtilityBundle\Traits\UuidTrait;
+use Money\Money;
 
 /**
  * Class Line
@@ -25,39 +27,36 @@ class Line implements LineInterface
     use PositionTrait;
 
     /**
-     * @var VariantInterface
      * @ORM\ManyToOne(targetEntity="LSB\OfferBundle\Entity\VariantInterface", inversedBy="lines")
      * @ORM\JoinColumn(name="variant_id", referencedColumnName="id", nullable=false)
      */
     protected VariantInterface $variant;
 
     /**
-     * @var ProductInterface|null
      * @ORM\ManyToOne(targetEntity="LSB\ProductBundle\Entity\ProductInterface")
      * @ORM\JoinColumn(name="product_id", referencedColumnName="id", nullable=true)
      */
     protected ?ProductInterface $product;
 
     /**
-     * @var string
      * @ORM\Column(type="string", length=255, nullable=false)
      */
     protected string $name;
 
     /**
-     * @ORM\Column(type="decimal", nullable=true, scale=2)
+     * @ORM\Column(type="integer", nullable=true)
      */
-    protected ?float $price;
+    protected ?int $price = null;
 
     /**
-     * @ORM\Column(type="decimal", nullable=true, scale=2)
+     * @ORM\Column(type="integer", nullable=true)
      */
-    protected ?float $discount;
+    protected ?int $discount = null;
 
     /**
-     * @ORM\Column(type="decimal", nullable=true, scale=2)
+     * @ORM\Column(type="integer", nullable=true)
      */
-    protected ?float $vat;
+    protected ?int $vat = null;
 
     /**
      * @ORM\Column(type="string", length=20, nullable=true)
@@ -67,7 +66,7 @@ class Line implements LineInterface
     /**
      * @ORM\Column(type="integer", nullable=true)
      */
-    protected ?int $quantity;
+    protected ?int $quantity = null;
 
 
     /**
@@ -142,56 +141,54 @@ class Line implements LineInterface
         return $this;
     }
 
-    /**
-     * @return float|null
-     */
-    public function getPrice(): ?float
+    public function getPrice(bool $useObject = false): Money|int|null
     {
-        return $this->price;
+        return $useObject ? ValueHelper::intToMoney($this->price, $this->getVariant()?->getOffer()?->getCurrency()?->getIsoCode()) : $this->price;
     }
 
-    /**
-     * @param float|null $price
-     * @return Line
-     */
-    public function setPrice(?float $price): Line
+    public function setPrice(Money|int|null $price): self
     {
+        if ($price instanceof Money) {
+            [$amount, $currency] = ValueHelper::moneyToIntCurrency($price);
+            $this->price = $amount;
+            return $this;
+        }
+
         $this->price = $price;
         return $this;
     }
 
-    /**
-     * @return float|null
-     */
-    public function getDiscount(): ?float
+
+    public function getDiscount(bool $useObject = false): Money|int|null
     {
-        return $this->discount;
+        return $useObject ? ValueHelper::intToMoney($this->discount, $this->getVariant()?->getOffer()?->getCurrency()?->getIsoCode()) : $this->discount;
     }
 
-    /**
-     * @param float|null $discount
-     * @return Line
-     */
-    public function setDiscount(?float $discount): Line
+    public function setDiscount(Money|int|null $discount): self
     {
+        if ($discount instanceof Money) {
+            [$amount, $currency] = ValueHelper::moneyToIntCurrency($discount);
+            $this->discount = $amount;
+            return $this;
+        }
+
         $this->discount = $discount;
         return $this;
     }
 
-    /**
-     * @return float|null
-     */
-    public function getVat(): ?float
+    public function getVat(bool $useObject = false): Money|int|null
     {
-        return $this->vat;
+        return $useObject ? ValueHelper::intToMoney($this->vat, $this->getVariant()?->getOffer()?->getCurrency()?->getIsoCode()) : $this->vat;
     }
 
-    /**
-     * @param float|null $vat
-     * @return Line
-     */
-    public function setVat(?float $vat): Line
+    public function setVat(Money|int|null $vat): self
     {
+        if ($vat instanceof Money) {
+            [$amount, $currency] = ValueHelper::moneyToIntCurrency($vat);
+            $this->vat = $amount;
+            return $this;
+        }
+
         $this->vat = $vat;
         return $this;
     }
@@ -214,21 +211,22 @@ class Line implements LineInterface
         return $this;
     }
 
-    /**
-     * @return int|null
-     */
-    public function getQuantity(): ?int
+    public function getQuantity(bool $useObject = false): Money|int|null
     {
-        return $this->quantity;
+        return $useObject ? ValueHelper::intToMoney($this->quantity, $this->getVariant()?->getOffer()?->getCurrency()?->getIsoCode()) : $this->quantity;
     }
 
-    /**
-     * @param int|null $quantity
-     * @return Line
-     */
-    public function setQuantity(?int $quantity): Line
+    public function setQuantity(Money|int|null $quantity): self
     {
+        if ($quantity instanceof Money) {
+            [$amount, $currency] = ValueHelper::moneyToIntCurrency($quantity);
+            $this->quantity = $amount;
+            return $this;
+        }
+
         $this->quantity = $quantity;
         return $this;
     }
+
+
 }

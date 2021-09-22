@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace LSB\OfferBundle\Entity;
 
 use LSB\ProductBundle\Entity\ProductInterface;
+use Money\Money;
 
 interface LineInterface
 {
@@ -19,23 +20,23 @@ interface LineInterface
 
     public function setName(string $name): self;
 
-    public function getPrice(): ?float;
+    public function getPrice(bool $useObject): Money|int|null;
 
-    public function setPrice(?float $price): self;
+    public function setPrice(Money|int|null $price): self;
 
-    public function getDiscount(): ?float;
+    public function getDiscount(bool $useObject): Money|int|null;
 
-    public function setDiscount(?float $discount): self;
+    public function setDiscount(Money|int|null $discount): self;
 
-    public function getVat(): ?float;
+    public function getVat(bool $useObject): Money|int|null;
 
-    public function setVat(?float $vat): self;
+    public function setVat(Money|int|null $vat): self;
 
     public function getUnit(): ?string;
 
     public function setUnit(?string $unit): self;
 
-    public function getQuantity(): ?int;
+    public function getQuantity(bool $useObject): Money|int|null;
 
-    public function setQuantity(?int $quantity): self;
+    public function setQuantity(Money|int|null $quantity): self;
 }
