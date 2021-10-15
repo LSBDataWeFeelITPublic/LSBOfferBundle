@@ -5,6 +5,7 @@ namespace LSB\OfferBundle\Service;
 
 use LSB\OfferBundle\Entity\Offer;
 use LSB\OfferBundle\Interfaces\ConverterModuleInterface;
+use LSB\OfferBundle\Model\ConvertOptions;
 use LSB\UtilityBundle\Module\ModuleInterface;
 
 /**
@@ -25,10 +26,9 @@ class OfferConverter
         return $this->converterInventory->getModuleByName($moduleName, $name, false);
     }
 
-    public function convert(Offer $offer, string $moduleName, ?string $name): object
+    public function convert(Offer $offer, ConvertOptions $options, string $moduleName, ?string $name): object
     {
-        $converter = $this->getConverter($moduleName, $name);
-        return $converter->convert($offer);
+        return $this->getConverter($moduleName, $name)->convert($offer, $options);
     }
 
 }

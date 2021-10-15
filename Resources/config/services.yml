@@ -1,1 +1,4 @@
 services:
+    # Offer2OrderConverterModule
+    LSB\OfferBundle\Converter\Offer2OrderConverterModule:
+        tags: [ { name: offer.converter } ]
